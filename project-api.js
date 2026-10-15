@@ -1,4 +1,5 @@
 import express from 'express';
+import { DatabaseConfigurationError } from './database.js';
 
 const statuses = new Set(['Planned', 'In Progress', 'Completed']);
 
@@ -62,6 +63,14 @@ export function createApp(db) {
     }
 
     res.json({ deleted: true });
+  });
+
+  router.use((error, req, res, next) => {
+    if (error instanceof DatabaseConfigurationError) {
+      return res.status(503).json({ error: error.message });
+    }
+
+    next(error);
   });
 
   return router;
