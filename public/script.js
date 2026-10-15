@@ -1,5 +1,12 @@
 async function request(path, options = {}) {
   const response = await fetch(path, options);
+  const contentType = response.headers.get('content-type') || '';
+  if (!contentType.toLowerCase().includes('application/json')) {
+    throw new Error(
+      `API request failed (HTTP ${response.status}): expected JSON but received ${contentType || 'an unknown content type'}. Check that the Vercel deployment runs the Express app and includes its API routes.`
+    );
+  }
+
   const data = await response.json();
 
   if (!response.ok) {

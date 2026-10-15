@@ -37,6 +37,12 @@ project's environment variables; do not expose it to the browser.
 The hosted URL for this classroom deployment will be added after deployment.
 No deployed URL is available yet.
 
+A Vercel project for this repository must use the repository root as its Root
+Directory and deploy the Express app, not just the `public` folder as a static
+site. Use the Express framework preset (or automatic Express detection), leave
+the Output Directory unset, and redeploy after changing these settings. Check
+that `/api/health` returns JSON before using the app.
+
 The existing deployment's Vercel and Supabase credentials and configuration
 belong to its original deployer; they are not included here. A reader deploying
 their own copy must create or use their own Vercel and Supabase projects, run
